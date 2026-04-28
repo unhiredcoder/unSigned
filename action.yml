@@ -1,9 +1,18 @@
-name: shvx-action-demo
-on: [push]
-jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+name: 'shvx-demo-action'
+description: 'A demo action that explores GitHub Actions by echoing event triggers.'
+branding:
+  icon: 'activity'
+  color: 'blue'
+
+# This is the "runs" property that was missing:
+runs:
+  using: 'composite'
+  steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+      # Note: 'shell' is required for every step in a composite action
+      shell: bash
+
+    - name: Echo Event Name
+      run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      shell: bash
